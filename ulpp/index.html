@@ -1,0 +1,69 @@
+<div class="box">
+	<textarea id="input" placeholder="enter URL to print prettily"></textarea>
+</div>
+
+<div class="box">
+	<pre id="output">no input yet!</pre>
+</div>
+
+<style>
+.clickable:hover  { cursor: grab; text-decoration: underline }
+.clickable:active { cursor: grabbing }
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 1em;
+}
+
+.box {
+	margin: 0.5em;
+	padding: 1em;
+	width: 40em;
+	background-color: #eee;
+}
+
+#input {
+	width: 100%;
+	height: 8em;
+}
+
+#output {
+	padding: 1em;
+	background-color: #fff;
+	overflow-x: scroll;
+	resize: both;
+}
+</style>
+
+<script>
+const INPUT  = document.querySelector('#input')
+const OUTPUT = document.querySelector('#output')
+
+INPUT.addEventListener('input', e => {
+	let url
+
+	try {
+		url = new URL(INPUT.value)
+	} catch (e) {
+		OUTPUT.innerHTML = "invalid URL"
+		return
+	}
+
+	const params  = [...url.searchParams.entries()]
+
+	const max_len = Math.max(...params.map(([key]) => key.length))
+
+	const pp_params = params
+		.map(([k, v]) => `${k.padEnd(max_len)} = <span class="clickable" onclick="copy(this)">${v}</span>`)
+		.join('\n')
+
+	output.innerHTML = `host: ${url.host}\npath: ${url.pathname}\n\n${pp_params}`
+})
+
+function copy(value_element)
+{
+	navigator.clipboard.writeText(value_element.innerHTML)
+}
+</script>
