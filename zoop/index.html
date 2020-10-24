@@ -8,16 +8,16 @@ body
 	{ margin: 0
 	; height: 100%
 	; display: grid
-	; grid-template-columns: 25em auto
-	; grid-template-rows: 75% 25%
+	; grid-template-columns: min-content 1fr
+	; grid-template-rows:    min-content 1fr
 	}
 #output
 	{ margin: 0
 	; padding: 1em
 	; grid-row-end: span 2
-	; background-color: #fff
 	; overflow: scroll
 	}
+#text_input { width: 25em; height: 30em }
 </style>
 
 <script>
